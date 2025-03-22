@@ -1,17 +1,20 @@
 import admin from "firebase-admin";
-import serviceAccount from "./firebase-service-account.json"; // Your Firebase JSON key
+import fs from "fs";
+
+// Read and parse the service account JSON file
+const serviceAccount = JSON.parse(fs.readFileSync("./firebase-service-account.json", "utf8"));
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 export const sendPushNotification = async (title) => {
   const message = {
     notification: {
       title: "New Story Available!",
-      body: `Check out the latest story: ${title}`
+      body: `Check out the latest story: ${title}`,
     },
-    topic: "all-users"
+    topic: "all-users",
   };
 
   try {
