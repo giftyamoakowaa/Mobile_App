@@ -45,3 +45,5 @@ dist/
 .idea/
 Thumbs.db
 
+
+firebase-service-account.json
