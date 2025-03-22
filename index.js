@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/authRoutes.js";
+import bookRouter from "./routes/bookRoutes.js";
+import reviewRouter from "./routes/reviewRoutes.js";
+import storyRouter from "./routes/storyRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -13,7 +16,7 @@ app.use(cors());
 app.use("/api/auth", router);
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -22,6 +25,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Story App API!");
 });
 
+app.use("/api/books", bookRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/stories", storyRouter);
 
-const PORT = process.env.PORT || 4090;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(4100, () =>
+  console.log('Server is running') 
+);
